@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FaHeart, FaSync } from 'react-icons/fa';
+import { toast } from 'react-hot-toast';
 
 const Home = () => {
+    const [featuredArtifacts, setFeaturedArtifacts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const fetchFeaturedArtifacts = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            
+            const response = await fetch('http://localhost:5000/api/artifacts/top-liked');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch featured artifacts');
+            }
+            
+            const data = await response.json();
+            // Ensure data is an array
+            setFeaturedArtifacts(Array.isArray(data) ? data : []);
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error.message);
+            toast.error(error.message);
+            setFeaturedArtifacts([]); // Set empty array on error
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchFeaturedArtifacts();
+    }, []);
+
+    // Function to handle retry
+    const handleRetry = () => {
+        fetchFeaturedArtifacts();
+    };
+
     return (
         <div className="bg-[#F5F5DC] font-[Cinzel]">
             {/* Hero Section */}
@@ -23,39 +62,70 @@ const Home = () => {
                             Featured Artifacts
                         </h2>
                         <p className="text-lg text-[#5C4033] max-w-2xl mx-auto">
-                            Explore our carefully curated selection of historical artifacts that tell remarkable stories.
+                            Discover our most appreciated historical treasures, curated by our community.
                         </p>
                     </motion.div>
 
-                    {/* Featured Artifacts Grid - Placeholder for dynamic content */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[1, 2, 3].map((item) => (
-                            <motion.div
-                                key={item}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: item * 0.2, duration: 0.8 }}
-                                viewport={{ once: true }}
-                                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105"
+                    {loading ? (
+                        <div className="text-center text-[#2C1810] text-xl">
+                            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8B4513] border-t-transparent rounded-full mb-4"></div>
+                            <p>Loading featured artifacts...</p>
+                        </div>
+                    ) : error ? (
+                        <div className="text-center">
+                            <p className="text-[#2C1810] text-xl mb-4">{error}</p>
+                            <button
+                                onClick={handleRetry}
+                                className="inline-flex items-center px-4 py-2 bg-[#8B4513] text-white rounded-md hover:bg-[#654321] transition-colors duration-300"
                             >
-                                <div className="h-48 bg-[#8B4513]/20"></div>
-                                <div className="p-6">
-                                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">
-                                        Artifact Title
-                                    </h3>
-                                    <p className="text-[#5C4033] mb-4">
-                                        Brief description of the artifact and its historical significance.
-                                    </p>
-                                    <Link
-                                        to="/all-arrifacts"
-                                        className="text-[#8B4513] hover:text-[#654321] font-medium"
-                                    >
-                                        Learn More →
-                                    </Link>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                                <FaSync className="mr-2" />
+                                Try Again
+                            </button>
+                        </div>
+                    ) : featuredArtifacts.length === 0 ? (
+                        <div className="text-center text-[#2C1810] text-xl">
+                            No featured artifacts available yet.
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {featuredArtifacts.map((artifact, index) => (
+                                <motion.div
+                                    key={artifact._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.2, duration: 0.8 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]"
+                                >
+                                    <div className="relative h-48">
+                                        <img
+                                            src={artifact.image}
+                                            alt={artifact.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute top-4 right-4 bg-[#2C1810]/80 text-[#F5F5DC] px-3 py-1 rounded-full flex items-center gap-2">
+                                            <FaHeart className="text-[#DAA520]" />
+                                            <span>{artifact.likeCount || 0}</span>
+                                        </div>
+                                    </div>
+                                    <div className="p-6">
+                                        <h3 className="text-xl font-bold text-[#2C1810] mb-2 line-clamp-1">
+                                            {artifact.name}
+                                        </h3>
+                                        <p className="text-[#5C4033] mb-4 line-clamp-2">
+                                            {artifact.description}
+                                        </p>
+                                        <Link
+                                            to={`/artifact-details/${artifact._id}`}
+                                            className="inline-block text-[#DAA520] hover:text-[#8B4513] font-medium transition-colors duration-300"
+                                        >
+                                            View Details →
+                                        </Link>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 

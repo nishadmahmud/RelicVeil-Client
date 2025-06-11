@@ -11,24 +11,33 @@ import Profile from "../pages/Profile";
 import MyArtifacts from "../pages/MyArtifacts";
 import LikedArtifacts from "../pages/LikedArtifacts";
 import ArtifactDetails from "../pages/ArtifactDetails";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <Home /> },
+      { 
+        path: "/", 
+        element: <Home />,
+        errorElement: <ErrorBoundary />
+      },
       {
         path: "login",
         element: <Login />,
+        errorElement: <ErrorBoundary />
       },
       {
         path: "register",
         element: <Register />,
+        errorElement: <ErrorBoundary />
       },
       {
         path: "all-arrifacts",
         element: <AllArtifacts />,
+        errorElement: <ErrorBoundary />
       },
       {
         path: "add-artifact",
@@ -37,6 +46,7 @@ const router = createBrowserRouter([
             <AddArtifacts />
           </PrivateRoute>
         ),
+        errorElement: <ErrorBoundary />
       },
       {
         path: "profile",
@@ -45,6 +55,7 @@ const router = createBrowserRouter([
             <Profile />
           </PrivateRoute>
         ),
+        errorElement: <ErrorBoundary />
       },
       {
         path: "my-artifacts",
@@ -53,6 +64,7 @@ const router = createBrowserRouter([
             <MyArtifacts />
           </PrivateRoute>
         ),
+        errorElement: <ErrorBoundary />
       },
       {
         path: "liked-artifacts",
@@ -61,6 +73,7 @@ const router = createBrowserRouter([
             <LikedArtifacts />
           </PrivateRoute>
         ),
+        errorElement: <ErrorBoundary />
       },
       {
         path: "artifact-details/:id",
@@ -69,12 +82,14 @@ const router = createBrowserRouter([
             <ArtifactDetails/>
           </PrivateRoute>
         ),
+        errorElement: <ErrorBoundary />
       },
     ],
   },
   {
     path: "*",
     element: <NotFound />,
+    errorElement: <ErrorBoundary />
   },
 ]);
 
