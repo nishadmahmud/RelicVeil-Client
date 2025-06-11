@@ -8,7 +8,7 @@ const AddArtifacts = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const initialFormState = {
         name: '',
         image: '',
         type: '',
@@ -20,7 +20,9 @@ const AddArtifacts = () => {
         presentLocation: '',
         adderName: user?.displayName || '',
         adderEmail: user?.email || ''
-    });
+    };
+
+    const [formData, setFormData] = useState(initialFormState);
 
     const artifactTypes = [
         'Tools',
@@ -63,8 +65,13 @@ const AddArtifacts = () => {
             const result = await response.json();
             
             if (result.success) {
-                toast.success('Artifact added successfully!');
-                navigate('/all-artifacts');
+                toast.success(`Artifact "${formData.name}" has been added successfully!`);
+                // Reset form to initial state
+                setFormData({
+                    ...initialFormState,
+                    adderName: user?.displayName || '',
+                    adderEmail: user?.email || ''
+                });
             } else {
                 throw new Error(result.message || 'Failed to add artifact');
             }
