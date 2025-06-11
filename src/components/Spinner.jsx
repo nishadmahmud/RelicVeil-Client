@@ -1,2 +1,11 @@
-const Spinner = () => <div className='text-center'>Loading...</div>;
+import React from 'react';
+
+const Spinner = () => {
+    return (
+        <div>
+            
+        </div>
+    );
+};
+
 export default Spinner;

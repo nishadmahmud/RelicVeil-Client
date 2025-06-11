@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Hero = () => {
+const NotFound = () => {
     return (
         <div>
-            
+            Not Found
         </div>
     );
 };
 
-export default Hero;
+export default NotFound;

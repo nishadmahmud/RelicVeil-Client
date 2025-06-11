@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Hero = () => {
+const Profile = () => {
     return (
         <div>
-            
+            Profile
         </div>
     );
 };
 
-export default Hero;
+export default Profile;
