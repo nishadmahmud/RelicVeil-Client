@@ -50,7 +50,11 @@ const ArtifactDetails = () => {
 
         try {
             const response = await fetch(`http://localhost:5000/api/artifacts/${id}/like`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userEmail: user.email })
             });
             const data = await response.json();
             
@@ -91,7 +95,11 @@ const ArtifactDetails = () => {
 
         try {
             const response = await fetch(`http://localhost:5000/api/artifacts/${id}/dislike`, {
-                method: 'PATCH'
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userEmail: user.email })
             });
             const data = await response.json();
             
