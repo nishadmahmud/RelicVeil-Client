@@ -11,6 +11,7 @@ import Profile from "../pages/Profile";
 import MyArtifacts from "../pages/MyArtifacts";
 import LikedArtifacts from "../pages/LikedArtifacts";
 import ArtifactDetails from "../pages/ArtifactDetails";
+import UpdateArtifact from "../pages/UpdateArtifact";
 import ErrorBoundary from "../components/ErrorBoundary";
 
 const router = createBrowserRouter([
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />
       },
       {
-        path: "all-arrifacts",
+        path: "all-artifacts",
         element: <AllArtifacts />,
         errorElement: <ErrorBoundary />
       },
@@ -84,6 +85,15 @@ const router = createBrowserRouter([
         ),
         errorElement: <ErrorBoundary />
       },
+      {
+        path: "update-artifact/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateArtifact />
+          </PrivateRoute>
+        ),
+        errorElement: <ErrorBoundary />
+      }
     ],
   },
   {

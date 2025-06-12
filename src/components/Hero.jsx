@@ -28,7 +28,7 @@ const Hero = () => {
             description: "Explore a curated collection of artifacts that shaped history. Each piece tells a unique story of our shared past."
         },
         {
-            bgImage: "url('https://images.unsplash.com/photo-1562281302-809d10c4c25e?q=80&w=2070')",
+            bgImage: "url('https://images.unsplash.com/photo-1608924066819-930edc42986a?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
             title: "Journey Through Time With",
             subtitle: "Ancient Artifacts",
             description: "Uncover the mysteries and legends behind ancient civilizations through their preserved artifacts."
@@ -110,7 +110,7 @@ const Hero = () => {
 
                                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                                     <Link
-                                        to="/all-arrifacts"
+                                        to="/all-artifacts"
                                         className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-[#8B4513] hover:bg-[#654321] transition-all duration-300 transform hover:scale-105"
                                     >
                                         Explore Collection

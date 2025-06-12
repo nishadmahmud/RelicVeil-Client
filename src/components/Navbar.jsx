@@ -74,7 +74,7 @@ const Navbar = () => {
                             <Link to="/" className={navLinkStyles('/')}>
                                 Home
                             </Link>
-                            <Link to="/all-arrifacts" className={navLinkStyles('/all-arrifacts')}>
+                            <Link to="/all-artifacts" className={navLinkStyles('/all-artifacts')}>
                                 All Artifacts
                             </Link>
                             <Link to="/add-artifact" className={navLinkStyles('/add-artifact')}>
