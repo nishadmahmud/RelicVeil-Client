@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 const AddArtifacts = () => {
     const { user } = useContext(AuthContext);
@@ -84,6 +85,10 @@ const AddArtifacts = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 font-[Cinzel] pt-24">
+            <Helmet>
+                <title>Add Artifact - RelicVeil</title>
+                <meta name="description" content="Contribute to history by adding a new artifact to our collection." />
+            </Helmet>
             <div className="max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

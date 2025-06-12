@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaSync } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
     const [featuredArtifacts, setFeaturedArtifacts] = useState([]);
@@ -45,6 +46,10 @@ const Home = () => {
 
     return (
         <div className="bg-[#F5F5DC] font-[Cinzel]">
+            <Helmet>
+                <title>RelicVeil - Discover Historical Treasures</title>
+                <meta name="description" content="Explore a curated collection of historical artifacts and treasures from around the world." />
+            </Helmet>
             {/* Hero Section */}
             <Hero />
 

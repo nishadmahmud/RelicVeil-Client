@@ -24,11 +24,16 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
+
     const handleLogout = async () => {
         try {
             await logOut();
             toast.success('Successfully logged out!');
             navigate('/');
+            closeMenu();
         } catch (error) {
             toast.error('Error logging out');
         }
@@ -131,6 +136,7 @@ const Navbar = () => {
                                             </div>
                                             <Link
                                                 to="/my-artifacts"
+                                                onClick={closeMenu}
                                                 className={`block px-4 py-2 text-sm ${
                                                     isActive('/my-artifacts')
                                                         ? 'text-[#DAA520] bg-[#2C1810]/5'
@@ -141,6 +147,7 @@ const Navbar = () => {
                                             </Link>
                                             <Link
                                                 to="/liked-artifacts"
+                                                onClick={closeMenu}
                                                 className={`block px-4 py-2 text-sm ${
                                                     isActive('/liked-artifacts')
                                                         ? 'text-[#DAA520] bg-[#2C1810]/5'
@@ -211,18 +218,21 @@ const Navbar = () => {
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <Link
                             to="/"
+                            onClick={closeMenu}
                             className={mobileLinkStyles('/')}
                         >
                             Home
                         </Link>
                         <Link
                             to="/all-arrifacts"
+                            onClick={closeMenu}
                             className={mobileLinkStyles('/all-arrifacts')}
                         >
                             All Artifacts
                         </Link>
                         <Link
                             to="/add-artifact"
+                            onClick={closeMenu}
                             className={mobileLinkStyles('/add-artifact')}
                         >
                             Add Artifact
@@ -231,12 +241,14 @@ const Navbar = () => {
                             <>
                                 <Link
                                     to="/my-artifacts"
+                                    onClick={closeMenu}
                                     className={mobileLinkStyles('/my-artifacts')}
                                 >
                                     My Artifacts
                                 </Link>
                                 <Link
                                     to="/liked-artifacts"
+                                    onClick={closeMenu}
                                     className={mobileLinkStyles('/liked-artifacts')}
                                 >
                                     Liked Artifacts
@@ -253,6 +265,7 @@ const Navbar = () => {
                             <div className="space-y-1">
                                 <Link
                                     to="/login"
+                                    onClick={closeMenu}
                                     className={`block px-3 py-2 rounded-md text-base font-medium text-white ${
                                         isActive('/login')
                                             ? 'bg-[#8B4513]'
@@ -263,6 +276,7 @@ const Navbar = () => {
                                 </Link>
                                 <Link
                                     to="/register"
+                                    onClick={closeMenu}
                                     className={`block px-3 py-2 rounded-md text-base font-medium ${
                                         isActive('/register')
                                             ? 'bg-[#F5F5DC] text-[#8B4513] border border-[#8B4513]'
@@ -274,7 +288,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-        </div>
+                </div>
             )}
         </nav>
     );

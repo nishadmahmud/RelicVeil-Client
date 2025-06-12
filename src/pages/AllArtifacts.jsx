@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const AllArtifacts = () => {
     const [artifacts, setArtifacts] = useState([]);
@@ -35,6 +36,10 @@ const AllArtifacts = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
+            <Helmet>
+                <title>All Artifacts - RelicVeil</title>
+                <meta name="description" content="Browse our complete collection of historical artifacts from different eras and civilizations." />
+            </Helmet>
             <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl font-bold text-[#2C1810] text-center mb-12 font-[Cinzel]">
                     Historical Artifacts Collection
