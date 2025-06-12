@@ -135,6 +135,17 @@ const Navbar = () => {
                                                 {user?.displayName}
                                             </div>
                                             <Link
+                                                to="/profile"
+                                                onClick={closeMenu}
+                                                className={`block px-4 py-2 text-sm ${
+                                                    isActive('/profile')
+                                                        ? 'text-[#DAA520] bg-[#2C1810]/5'
+                                                        : 'text-[#2C1810] hover:bg-[#F5F5DC]'
+                                                }`}
+                                            >
+                                                Profile
+                                            </Link>
+                                            <Link
                                                 to="/my-artifacts"
                                                 onClick={closeMenu}
                                                 className={`block px-4 py-2 text-sm ${
