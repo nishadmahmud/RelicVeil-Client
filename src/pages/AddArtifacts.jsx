@@ -1,14 +1,21 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 
 const AddArtifacts = () => {
-    const { user } = useContext(AuthContext);
+    const { user, getToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+    // Redirect if not authenticated
+    if (!user) {
+        toast.error('Please login to add artifacts');
+        return <Navigate to="/login" replace />;
+    }
+
     const initialFormState = {
         name: '',
         image: '',
@@ -51,10 +58,14 @@ const AddArtifacts = () => {
         setLoading(true);
 
         try {
+            // Get the Firebase ID token
+            const token = await getToken();
+            
             const response = await fetch('http://localhost:5000/api/artifacts', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -73,11 +84,14 @@ const AddArtifacts = () => {
                     adderName: user?.displayName || '',
                     adderEmail: user?.email || ''
                 });
+                // Navigate to my artifacts page after successful addition
+                navigate('/my-artifacts');
             } else {
                 throw new Error(result.message || 'Failed to add artifact');
             }
         } catch (error) {
             toast.error(error.message);
+            console.error('Error:', error);
         } finally {
             setLoading(false);
         }

@@ -1,17 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaHeart, FaHeartBroken, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaEnvelope } from 'react-icons/fa';
 import { AuthContext } from '../auth/AuthProvider';
+import { Helmet } from 'react-helmet-async';
 
 const ArtifactDetails = () => {
     const { id } = useParams();
-    const { user } = useContext(AuthContext);
+    const { user, getToken } = useContext(AuthContext);
     const [artifact, setArtifact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasLiked, setHasLiked] = useState(false);
     const [hasDisliked, setHasDisliked] = useState(false);
+
+    // Redirect if not authenticated
+    if (!user) {
+        toast.error('Please login to view artifact details');
+        return <Navigate to="/login" replace />;
+    }
 
     useEffect(() => {
         fetchArtifactDetails();
@@ -27,7 +34,19 @@ const ArtifactDetails = () => {
 
     const fetchArtifactDetails = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`);
+            // Get the Firebase ID token
+            const token = await getToken();
+            
+            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch artifact details');
+            }
+            
             const data = await response.json();
             setArtifact(data);
         } catch (error) {
@@ -45,17 +64,26 @@ const ArtifactDetails = () => {
         }
 
         if (hasLiked) {
-            return; // Button should be disabled anyway
+            return;
         }
 
         try {
+            // Get the Firebase ID token
+            const token = await getToken();
+            
             const response = await fetch(`http://localhost:5000/api/artifacts/${id}/like`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ userEmail: user.email })
             });
+            
+            if (!response.ok) {
+                throw new Error('Failed to like artifact');
+            }
+            
             const data = await response.json();
             
             if (data.success) {
@@ -90,17 +118,26 @@ const ArtifactDetails = () => {
         }
 
         if (hasDisliked || (!hasLiked && !hasDisliked)) {
-            return; // Button should be disabled in these cases
+            return;
         }
 
         try {
+            // Get the Firebase ID token
+            const token = await getToken();
+            
             const response = await fetch(`http://localhost:5000/api/artifacts/${id}/dislike`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ userEmail: user.email })
             });
+            
+            if (!response.ok) {
+                throw new Error('Failed to dislike artifact');
+            }
+            
             const data = await response.json();
             
             if (data.success) {

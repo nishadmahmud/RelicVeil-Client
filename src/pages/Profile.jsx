@@ -5,9 +5,11 @@ import { toast } from 'react-hot-toast';
 import { FaUser, FaEnvelope, FaCamera, FaCalendarAlt } from 'react-icons/fa';
 import { GiEgyptianTemple, GiAncientColumns } from 'react-icons/gi';
 import { Helmet } from 'react-helmet-async';
+import { Navigate } from 'react-router-dom';
+import { getUserArtifacts, getLikedArtifacts } from '../utils/api';
 
 const Profile = () => {
-    const { user, updateUserProfile } = useContext(AuthContext);
+    const { user, updateUserProfile, getToken } = useContext(AuthContext);
     const [isEditing, setIsEditing] = useState(false);
     const [stats, setStats] = useState({
         totalLiked: 0,
@@ -19,6 +21,12 @@ const Profile = () => {
         photoURL: user?.photoURL || ''
     });
 
+    // Redirect if not authenticated
+    if (!user) {
+        toast.error('Please login to access your profile');
+        return <Navigate to="/login" replace />;
+    }
+
     useEffect(() => {
         fetchUserStats();
     }, [user]);
@@ -27,13 +35,11 @@ const Profile = () => {
         if (!user?.email) return;
 
         try {
-            // Fetch liked artifacts
-            const likedResponse = await fetch(`http://localhost:5000/api/artifacts/liked/${user.email}`);
-            const likedData = await likedResponse.json();
-
-            // Fetch added artifacts
-            const addedResponse = await fetch(`http://localhost:5000/api/artifacts/user/${user.email}`);
-            const addedData = await addedResponse.json();
+            // Use the api utility functions which handle authentication
+            const [likedData, addedData] = await Promise.all([
+                getLikedArtifacts(getToken),
+                getUserArtifacts(getToken)
+            ]);
 
             setStats(prev => ({
                 ...prev,

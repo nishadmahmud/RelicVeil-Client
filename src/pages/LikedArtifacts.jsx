@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
@@ -7,9 +7,15 @@ import { AuthContext } from '../auth/AuthProvider';
 import { Helmet } from 'react-helmet-async';
 
 const LikedArtifacts = () => {
-    const { user } = useContext(AuthContext);
+    const { user, getToken } = useContext(AuthContext);
     const [artifacts, setArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Redirect if not authenticated
+    if (!user) {
+        toast.error('Please login to view your liked artifacts');
+        return <Navigate to="/login" replace />;
+    }
 
     useEffect(() => {
         if (user) {
@@ -19,7 +25,19 @@ const LikedArtifacts = () => {
 
     const fetchLikedArtifacts = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/artifacts/liked/${user.email}`);
+            // Get the Firebase ID token
+            const token = await getToken();
+            
+            const response = await fetch(`http://localhost:5000/api/artifacts/liked/${user.email}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch liked artifacts');
+            }
+            
             const data = await response.json();
             setArtifacts(data);
         } catch (error) {

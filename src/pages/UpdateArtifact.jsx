@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
+import { AuthContext } from '../auth/AuthProvider';
 
 const UpdateArtifact = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user, getToken } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+
+    // Redirect if not authenticated
+    if (!user) {
+        toast.error('Please login to update artifacts');
+        return <Navigate to="/login" replace />;
+    }
 
     const [formData, setFormData] = useState({
         name: '',
@@ -40,13 +48,20 @@ const UpdateArtifact = () => {
 
     const fetchArtifactDetails = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`);
+            // Get the Firebase ID token
+            const token = await getToken();
+            
+            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
             if (!response.ok) {
                 throw new Error('Failed to fetch artifact details');
             }
-            const data = await response.json();
             
-            // Set form data with existing values
+            const data = await response.json();
             setFormData({
                 name: data.name || '',
                 image: data.image || '',
@@ -80,10 +95,14 @@ const UpdateArtifact = () => {
         setSubmitting(true);
 
         try {
+            // Get the Firebase ID token
+            const token = await getToken();
+            
             const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
