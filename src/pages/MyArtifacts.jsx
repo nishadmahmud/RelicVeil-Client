@@ -31,7 +31,7 @@ const MyArtifacts = () => {
             // Get the Firebase ID token
             const token = await getToken();
             
-            const response = await fetch(`http://localhost:5000/api/artifacts/user/${user.email}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/user/${user.email}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -77,7 +77,7 @@ const MyArtifacts = () => {
                 // Get the Firebase ID token
                 const token = await getToken();
                 
-                const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',

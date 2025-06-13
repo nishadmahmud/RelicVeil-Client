@@ -31,7 +31,7 @@ const LikedArtifacts = () => {
             // Get the Firebase ID token
             const token = await getToken();
             
-            const response = await fetch(`http://localhost:5000/api/artifacts/liked/${user.email}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/liked/${user.email}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

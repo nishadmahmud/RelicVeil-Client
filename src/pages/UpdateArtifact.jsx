@@ -51,7 +51,7 @@ const UpdateArtifact = () => {
             // Get the Firebase ID token
             const token = await getToken();
             
-            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -98,7 +98,7 @@ const UpdateArtifact = () => {
             // Get the Firebase ID token
             const token = await getToken();
             
-            const response = await fetch(`http://localhost:5000/api/artifacts/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const Home = () => {
             setLoading(true);
             setError(null);
             
-            const response = await fetch('http://localhost:5000/api/artifacts/top-liked');
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/top-liked`);
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to fetch featured artifacts');
