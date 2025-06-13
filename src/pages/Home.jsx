@@ -131,6 +131,35 @@ const Home = () => {
                             ))}
                         </div>
                     )}
+                    
+                    {/* Show All Button */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                        viewport={{ once: true }}
+                        className="text-center mt-12"
+                    >
+                        <Link
+                            to="/all-artifacts"
+                            className="inline-flex items-center px-8 py-3 bg-[#2C1810] text-[#F5F5DC] rounded-lg hover:bg-[#8B4513] transition-colors duration-300 font-medium"
+                        >
+                            View All Artifacts
+                            <svg 
+                                className="w-5 h-5 ml-2" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path 
+                                    strokeLinecap="round" 
+                                    strokeLinejoin="round" 
+                                    strokeWidth={2} 
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3" 
+                                />
+                            </svg>
+                        </Link>
+                    </motion.div>
                 </div>
             </section>
 

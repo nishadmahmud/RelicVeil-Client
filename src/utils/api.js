@@ -48,6 +48,12 @@ export const getTopLikedArtifacts = () => {
     });
 };
 
+export const searchArtifacts = (query) => {
+    return apiCall(`/artifacts/search?q=${encodeURIComponent(query)}`, {
+        method: 'GET'
+    });
+};
+
 // Protected API endpoints (auth required)
 export const addArtifact = async (artifactData, getToken) => {
     return apiCall('/artifacts', {

@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { getPublicArtifacts } from '../utils/api';
 
 const AllArtifacts = () => {
-    const [artifacts, setArtifacts] = useState([]);
+    const [allArtifacts, setAllArtifacts] = useState([]);
+    const [filteredArtifacts, setFilteredArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetchArtifacts();
     }, []);
 
+    useEffect(() => {
+        // Filter artifacts whenever searchQuery changes
+        if (!searchQuery.trim()) {
+            setFilteredArtifacts(allArtifacts);
+            return;
+        }
+
+        const query = searchQuery.toLowerCase().trim();
+        const filtered = allArtifacts.filter(artifact => 
+            artifact.name.toLowerCase().includes(query) ||
+            artifact.description.toLowerCase().includes(query) ||
+            artifact.type.toLowerCase().includes(query) ||
+            artifact.presentLocation.toLowerCase().includes(query)
+        );
+        setFilteredArtifacts(filtered);
+    }, [searchQuery, allArtifacts]);
+
     const fetchArtifacts = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/artifacts');
-            const data = await response.json();
-            setArtifacts(data);
+            const data = await getPublicArtifacts();
+            setAllArtifacts(data);
+            setFilteredArtifacts(data);
         } catch (error) {
             toast.error('Failed to fetch artifacts');
             console.error('Error:', error);
@@ -41,12 +61,31 @@ const AllArtifacts = () => {
                 <meta name="description" content="Browse our complete collection of historical artifacts from different eras and civilizations." />
             </Helmet>
             <div className="max-w-7xl mx-auto">
-                <h1 className="text-4xl font-bold text-[#2C1810] text-center mb-12 font-[Cinzel]">
+                <h1 className="text-4xl font-bold text-[#2C1810] text-center mb-8 font-[Cinzel]">
                     Historical Artifacts Collection
                 </h1>
 
+                {/* Search Bar */}
+                <div className="max-w-2xl mx-auto mb-12">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search artifacts by name, type, location, or description..."
+                            className="w-full px-4 py-3 pl-12 pr-4 text-[#2C1810] bg-white border border-[#8B4513]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] placeholder-[#8B4513]/50"
+                        />
+                        <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8B4513]" />
+                    </div>
+                    {searchQuery && (
+                        <p className="text-sm text-[#8B4513] mt-2 text-center">
+                            Found {filteredArtifacts.length} results for "{searchQuery}"
+                        </p>
+                    )}
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {artifacts.map((artifact) => (
+                    {filteredArtifacts.map((artifact) => (
                         <motion.div
                             key={artifact._id}
                             initial={{ opacity: 0, y: 20 }}
@@ -95,9 +134,9 @@ const AllArtifacts = () => {
                     ))}
                 </div>
 
-                {artifacts.length === 0 && (
+                {filteredArtifacts.length === 0 && (
                     <div className="text-center text-[#2C1810] text-xl font-[Cinzel] mt-8">
-                        No artifacts found. Be the first to add one!
+                        {searchQuery ? 'No artifacts found matching your search.' : 'No artifacts found. Be the first to add one!'}
                     </div>
                 )}
             </div>
