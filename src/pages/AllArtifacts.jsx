@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaMapMarkerAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { getPublicArtifacts } from '../utils/api';
 
 const AllArtifacts = () => {
@@ -11,6 +10,11 @@ const AllArtifacts = () => {
     const [filteredArtifacts, setFilteredArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Set page title
+    useEffect(() => {
+        document.title = 'All Artifacts - RelicVeil';
+    }, []);
 
     useEffect(() => {
         fetchArtifacts();
@@ -56,10 +60,6 @@ const AllArtifacts = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
-            <Helmet>
-                <title>All Artifacts - RelicVeil</title>
-                <meta name="description" content="Browse our complete collection of historical artifacts from different eras and civilizations." />
-            </Helmet>
             <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl font-bold text-[#2C1810] text-center mb-8 font-[Cinzel]">
                     Historical Artifacts Collection

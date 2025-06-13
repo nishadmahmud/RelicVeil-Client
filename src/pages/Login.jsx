@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 import { toast } from 'react-hot-toast';
-import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +12,11 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        document.title = 'Login - RelicVeil';
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -37,10 +42,6 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 font-[Cinzel]">
-            <Helmet>
-                <title>Login - RelicVeil</title>
-                <meta name="description" content="Sign in to your RelicVeil account to manage and explore historical artifacts." />
-            </Helmet>
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-2xl border border-[#8B4513]/20">
                 <div>
                     <h2 className="mt-4 text-center text-3xl font-bold text-[#2C1810]">

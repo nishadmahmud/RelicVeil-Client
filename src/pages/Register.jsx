@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
@@ -13,6 +13,10 @@ const Register = () => {
     });
     const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Register - RelicVeil';
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

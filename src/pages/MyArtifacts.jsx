@@ -5,12 +5,16 @@ import { toast } from 'react-hot-toast';
 import { FaEdit, FaTrash, FaMapMarkerAlt, FaCalendarAlt, FaArchway } from 'react-icons/fa';
 import { AuthContext } from '../auth/AuthProvider';
 import Swal from 'sweetalert2';
-import { Helmet } from 'react-helmet-async';
 
 const MyArtifacts = () => {
     const { user, getToken } = useContext(AuthContext);
     const [artifacts, setArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Set page title
+    useEffect(() => {
+        document.title = 'My Artifacts - RelicVeil';
+    }, []);
 
     // Redirect if not authenticated
     if (!user) {
@@ -130,10 +134,6 @@ const MyArtifacts = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
-            <Helmet>
-                <title>My Artifacts - RelicVeil</title>
-                <meta name="description" content="Manage and view your contributed historical artifacts collection." />
-            </Helmet>
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold text-[#2C1810] mb-4 font-[Cinzel]">

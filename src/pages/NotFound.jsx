@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaHome } from 'react-icons/fa';
-import { Helmet } from 'react-helmet-async';
 
 const NotFound = () => {
+    useEffect(() => {
+        document.title = '404 Not Found - RelicVeil';
+    }, []);
+
     return (
         <div className="min-h-screen bg-[#F5F5DC] flex items-center justify-center px-4 font-[Cinzel]">
-            <Helmet>
-                <title>404 Not Found - RelicVeil</title>
-                <meta name="description" content="The page you're looking for could not be found." />
-            </Helmet>
             <div className="text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

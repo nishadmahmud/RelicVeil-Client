@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaHeart, FaHeartBroken, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaEnvelope } from 'react-icons/fa';
 import { AuthContext } from '../auth/AuthProvider';
-import { Helmet } from 'react-helmet-async';
 
 const ArtifactDetails = () => {
     const { id } = useParams();
@@ -13,6 +12,11 @@ const ArtifactDetails = () => {
     const [loading, setLoading] = useState(true);
     const [hasLiked, setHasLiked] = useState(false);
     const [hasDisliked, setHasDisliked] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        document.title = artifact ? `${artifact.name} - RelicVeil` : 'Artifact Details - RelicVeil';
+    }, [artifact]);
 
     // Redirect if not authenticated
     if (!user) {

@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { FaHeart, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { AuthContext } from '../auth/AuthProvider';
-import { Helmet } from 'react-helmet-async';
 
 const LikedArtifacts = () => {
     const { user, getToken } = useContext(AuthContext);
     const [artifacts, setArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        document.title = 'Liked Artifacts - RelicVeil';
+    }, []);
 
     // Redirect if not authenticated
     if (!user) {
@@ -58,10 +61,6 @@ const LikedArtifacts = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
-            <Helmet>
-                <title>Liked Artifacts - RelicVeil</title>
-                <meta name="description" content="View your collection of favorite historical artifacts that you've liked." />
-            </Helmet>
             <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl font-bold text-[#2C1810] text-center mb-12 font-[Cinzel]">
                     Your Liked Artifacts

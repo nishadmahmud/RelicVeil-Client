@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaUser, FaEnvelope, FaCamera, FaCalendarAlt } from 'react-icons/fa';
 import { GiEgyptianTemple, GiAncientColumns } from 'react-icons/gi';
-import { Helmet } from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
 import { getUserArtifacts, getLikedArtifacts } from '../utils/api';
 
@@ -20,6 +19,11 @@ const Profile = () => {
         displayName: user?.displayName || '',
         photoURL: user?.photoURL || ''
     });
+
+    // Set page title
+    useEffect(() => {
+        document.title = 'Profile - RelicVeil';
+    }, []);
 
     // Redirect if not authenticated
     if (!user) {
@@ -85,10 +89,6 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
-            <Helmet>
-                <title>Profile - RelicVeil</title>
-                <meta name="description" content="View and manage your RelicVeil profile settings." />
-            </Helmet>
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Profile Info Card */}
