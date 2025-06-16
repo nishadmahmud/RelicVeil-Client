@@ -20,12 +20,10 @@ const Profile = () => {
         photoURL: user?.photoURL || ''
     });
 
-    // Set page title
     useEffect(() => {
         document.title = 'Profile - RelicVeil';
     }, []);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to access your profile');
         return <Navigate to="/login" replace />;
@@ -39,7 +37,6 @@ const Profile = () => {
         if (!user?.email) return;
 
         try {
-            // Use the api utility functions which handle authentication
             const [likedData, addedData] = await Promise.all([
                 getLikedArtifacts(getToken),
                 getUserArtifacts(getToken)
@@ -91,7 +88,6 @@ const Profile = () => {
         <div className="min-h-screen bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 pt-24">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Profile Info Card */}
                     <div className="lg:col-span-2">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -208,7 +204,6 @@ const Profile = () => {
                         </motion.div>
                     </div>
 
-                    {/* Stats Cards */}
                     <div className="lg:col-span-1 space-y-6">
                         <StatCard
                             icon={GiEgyptianTemple}

@@ -13,7 +13,6 @@ const AddArtifacts = () => {
         document.title = 'Add Artifact - RelicVeil';
     }, []);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to add artifacts');
         return <Navigate to="/login" replace />;
@@ -61,7 +60,6 @@ const AddArtifacts = () => {
         setLoading(true);
 
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts`, {
@@ -81,13 +79,11 @@ const AddArtifacts = () => {
             
             if (result.success) {
                 toast.success(`Artifact "${formData.name}" has been added successfully!`);
-                // Reset form to initial state
                 setFormData({
                     ...initialFormState,
                     adderName: user?.displayName || '',
                     adderEmail: user?.email || ''
                 });
-                // Navigate to my artifacts page after successful addition
                 navigate('/my-artifacts');
             } else {
                 throw new Error(result.message || 'Failed to add artifact');
@@ -114,7 +110,6 @@ const AddArtifacts = () => {
                     </h2>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Basic Information */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-[#2C1810]">
@@ -232,7 +227,6 @@ const AddArtifacts = () => {
                             </div>
                         </div>
 
-                        {/* Description and Context */}
                         <div className="space-y-6">
                             <div>
                                 <label htmlFor="historicalContext" className="block text-sm font-medium text-[#2C1810]">
@@ -267,7 +261,6 @@ const AddArtifacts = () => {
                             </div>
                         </div>
 
-                        {/* User Information (Read-only) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-[#2C1810]">
@@ -294,7 +287,6 @@ const AddArtifacts = () => {
                             </div>
                         </div>
 
-                        {/* Submit Button */}
                         <div className="flex justify-center pt-6">
                             <button
                                 type="submit"

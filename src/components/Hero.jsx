@@ -78,7 +78,7 @@ const Hero = () => {
             <Slider {...sliderSettings}>
                 {slides.map((slide, index) => (
                     <div key={index} className="relative min-h-screen flex items-start justify-center pt-20">
-                        {/* Background Image with Parallax Effect */}
+
                         <div 
                             className="absolute inset-0 z-0"
                             style={{
@@ -91,7 +91,7 @@ const Hero = () => {
                             <div className="absolute inset-0 bg-[#2C1810]/60"></div>
                         </div>
 
-                        {/* Content */}
+
                         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                             <motion.div
                                 key={index}
@@ -124,7 +124,7 @@ const Hero = () => {
                                 </div>
                             </motion.div>
 
-                            {/* Feature Highlights */}
+
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-20">
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
@@ -156,7 +156,7 @@ const Hero = () => {
                             </div>
                         </div>
 
-                        {/* Decorative Elements */}
+
                         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#2C1810] to-transparent z-10"></div>
                     </div>
                 ))}

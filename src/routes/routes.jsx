@@ -13,6 +13,8 @@ import LikedArtifacts from "../pages/LikedArtifacts";
 import ArtifactDetails from "../pages/ArtifactDetails";
 import UpdateArtifact from "../pages/UpdateArtifact";
 import ErrorBoundary from "../components/ErrorBoundary";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,16 @@ const router = createBrowserRouter([
       { 
         path: "/", 
         element: <Home />,
+        errorElement: <ErrorBoundary />
+      },
+      {
+        path: "about",
+        element: <About />,
+        errorElement: <ErrorBoundary />
+      },
+      {
+        path: "contact",
+        element: <Contact />,
         errorElement: <ErrorBoundary />
       },
       {

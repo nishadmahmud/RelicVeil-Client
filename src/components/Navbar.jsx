@@ -11,7 +11,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Handle scroll effect
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -61,7 +61,7 @@ const Navbar = () => {
         }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo and Brand */}
+
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -73,7 +73,7 @@ const Navbar = () => {
                         </Link>
                     </motion.div>
 
-                    {/* Desktop Navigation */}
+
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-4">
                             <Link to="/" className={navLinkStyles('/')}>
@@ -85,10 +85,16 @@ const Navbar = () => {
                             <Link to="/add-artifact" className={navLinkStyles('/add-artifact')}>
                                 Add Artifact
                             </Link>
+                            <Link to="/about" className={navLinkStyles('/about')}>
+                                About
+                            </Link>
+                            <Link to="/contact" className={navLinkStyles('/contact')}>
+                                Contact
+                            </Link>
                         </div>
                     </div>
 
-                    {/* Authentication Section */}
+
                     <div className="hidden md:block">
                         {!user && (
                             <div className="flex items-center space-x-4">
@@ -127,7 +133,7 @@ const Navbar = () => {
                                     />
                                 </button>
 
-                                {/* Dropdown Menu */}
+
                                 {isOpen && (
                                     <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-[#8B4513]/20 transform origin-top-right transition-transform duration-200 ease-out">
                                         <div className="py-1">
@@ -180,7 +186,7 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Mobile menu button */}
+
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -223,7 +229,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile menu */}
+
             {isOpen && (
                 <div className="md:hidden bg-white shadow-lg border-t border-[#8B4513]/20">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -235,9 +241,9 @@ const Navbar = () => {
                             Home
                         </Link>
                         <Link
-                            to="/all-arrifacts"
+                            to="/all-artifacts"
                             onClick={closeMenu}
-                            className={mobileLinkStyles('/all-arrifacts')}
+                            className={mobileLinkStyles('/all-artifacts')}
                         >
                             All Artifacts
                         </Link>
@@ -247,6 +253,20 @@ const Navbar = () => {
                             className={mobileLinkStyles('/add-artifact')}
                         >
                             Add Artifact
+                        </Link>
+                        <Link
+                            to="/about"
+                            onClick={closeMenu}
+                            className={mobileLinkStyles('/about')}
+                        >
+                            About
+                        </Link>
+                        <Link
+                            to="/contact"
+                            onClick={closeMenu}
+                            className={mobileLinkStyles('/contact')}
+                        >
+                            Contact
                         </Link>
                         {user && (
                             <>

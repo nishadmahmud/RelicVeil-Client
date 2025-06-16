@@ -11,7 +11,6 @@ const AllArtifacts = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Set page title
     useEffect(() => {
         document.title = 'All Artifacts - RelicVeil';
     }, []);
@@ -21,7 +20,6 @@ const AllArtifacts = () => {
     }, []);
 
     useEffect(() => {
-        // Filter artifacts whenever searchQuery changes
         if (!searchQuery.trim()) {
             setFilteredArtifacts(allArtifacts);
             return;
@@ -65,7 +63,6 @@ const AllArtifacts = () => {
                     Historical Artifacts Collection
                 </h1>
 
-                {/* Search Bar */}
                 <div className="max-w-2xl mx-auto mb-12">
                     <div className="relative">
                         <input

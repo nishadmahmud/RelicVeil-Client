@@ -11,7 +11,6 @@ const UpdateArtifact = () => {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to update artifacts');
         return <Navigate to="/login" replace />;
@@ -48,7 +47,6 @@ const UpdateArtifact = () => {
 
     const fetchArtifactDetails = async () => {
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
@@ -95,7 +93,6 @@ const UpdateArtifact = () => {
         setSubmitting(true);
 
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
@@ -149,7 +146,6 @@ const UpdateArtifact = () => {
                     </h2>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Name */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Artifact Name
@@ -164,7 +160,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Image URL */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Image URL
@@ -179,7 +174,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Type */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Artifact Type
@@ -200,7 +194,6 @@ const UpdateArtifact = () => {
                             </select>
                         </div>
 
-                        {/* Historical Context */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Historical Context
@@ -215,7 +208,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Created At */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Created At (e.g., "100 BC")
@@ -230,7 +222,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Discovered At */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Discovered At (e.g., "1799")
@@ -245,7 +236,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Discovered By */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Discovered By
@@ -260,7 +250,6 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Present Location */}
                         <div>
                             <label className="block text-[#2C1810] font-semibold mb-2">
                                 Present Location
@@ -275,7 +264,7 @@ const UpdateArtifact = () => {
                             />
                         </div>
 
-                        {/* Submit Button */}
+
                         <div className="flex justify-center">
                             <button
                                 type="submit"

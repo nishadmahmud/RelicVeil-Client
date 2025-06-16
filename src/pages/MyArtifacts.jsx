@@ -11,12 +11,10 @@ const MyArtifacts = () => {
     const [artifacts, setArtifacts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Set page title
     useEffect(() => {
         document.title = 'My Artifacts - RelicVeil';
     }, []);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to view your artifacts');
         return <Navigate to="/login" replace />;
@@ -28,7 +26,6 @@ const MyArtifacts = () => {
 
     const fetchMyArtifacts = async () => {
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/user/${user.email}`, {
@@ -52,7 +49,6 @@ const MyArtifacts = () => {
     };
 
     const handleDelete = async (id, artifactName) => {
-        // Show confirmation dialog
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: `Do you want to delete "${artifactName}"? This action cannot be undone.`,
@@ -71,10 +67,8 @@ const MyArtifacts = () => {
             }
         });
 
-        // If user confirms
         if (result.isConfirmed) {
             try {
-                // Get the Firebase ID token
                 const token = await getToken();
                 
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
@@ -87,7 +81,6 @@ const MyArtifacts = () => {
                 const data = await response.json();
 
                 if (data.success) {
-                    // Show success message
                     await Swal.fire({
                         title: 'Deleted!',
                         text: 'Your artifact has been deleted.',
@@ -101,7 +94,6 @@ const MyArtifacts = () => {
                         }
                     });
                     
-                    // Remove the deleted artifact from state
                     setArtifacts(artifacts.filter(artifact => artifact._id !== id));
                 } else {
                     throw new Error(data.message || 'Failed to delete artifact');

@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="bg-[#2C1810] text-[#F5F5DC] py-12 font-[Cinzel]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* About Section */}
+
                     <div>
                         <h3 className="text-2xl font-bold text-[#DAA520] mb-4">RelicVeil</h3>
                         <p className="text-sm">
@@ -15,7 +15,6 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* Quick Links */}
                     <div>
                         <h4 className="text-lg font-semibold text-[#DAA520] mb-4">Quick Links</h4>
                         <ul className="space-y-2">
@@ -37,7 +36,6 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Connect Section */}
                     <div>
                         <h4 className="text-lg font-semibold text-[#DAA520] mb-4">Connect With Us</h4>
                         <div className="flex space-x-4">
@@ -57,7 +55,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Copyright */}
                 <div className="mt-12 pt-8 border-t border-[#8B4513] text-center">
                     <p className="text-sm">
                         Made with <FaHeart className="inline-block text-[#DAA520] mx-1" /> by RelicVeil Team © {new Date().getFullYear()}

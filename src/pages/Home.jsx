@@ -10,7 +10,6 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Set page title
     useEffect(() => {
         document.title = 'RelicVeil - Discover Historical Treasures';
     }, []);
@@ -27,13 +26,12 @@ const Home = () => {
             }
             
             const data = await response.json();
-            // Ensure data is an array
             setFeaturedArtifacts(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error:', error);
             setError(error.message);
             toast.error(error.message);
-            setFeaturedArtifacts([]); // Set empty array on error
+            setFeaturedArtifacts([]);
         } finally {
             setLoading(false);
         }
@@ -43,17 +41,14 @@ const Home = () => {
         fetchFeaturedArtifacts();
     }, []);
 
-    // Function to handle retry
     const handleRetry = () => {
         fetchFeaturedArtifacts();
     };
 
     return (
         <div className="bg-[#F5F5DC] font-[Cinzel]">
-            {/* Hero Section */}
             <Hero />
 
-            {/* Featured Artifacts Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
@@ -132,7 +127,6 @@ const Home = () => {
                         </div>
                     )}
                     
-                    {/* Show All Button */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -163,7 +157,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Call to Action Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#2C1810]">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
@@ -189,7 +182,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Why Choose RelicVeil Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <motion.div

@@ -14,7 +14,6 @@ const LikedArtifacts = () => {
         document.title = 'Liked Artifacts - RelicVeil';
     }, []);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to view your liked artifacts');
         return <Navigate to="/login" replace />;
@@ -28,7 +27,6 @@ const LikedArtifacts = () => {
 
     const fetchLikedArtifacts = async () => {
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/liked/${user.email}`, {

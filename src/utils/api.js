@@ -1,12 +1,10 @@
 const BASE_URL = import.meta.env.VITE_API_URL + '/api';
 
-// Helper to get auth header
 const getAuthHeader = async (getToken) => {
     const token = await getToken();
     return token ? { 'Authorization': `Bearer ${token}` } : {};
 };
 
-// Generic API call function with authentication
 const apiCall = async (endpoint, options = {}, getToken = null) => {
     try {
         const headers = {
@@ -35,7 +33,6 @@ const apiCall = async (endpoint, options = {}, getToken = null) => {
     }
 };
 
-// Public API endpoints (no auth required)
 export const getPublicArtifacts = () => {
     return apiCall('/artifacts', {
         method: 'GET'
@@ -54,7 +51,6 @@ export const searchArtifacts = (query) => {
     });
 };
 
-// Protected API endpoints (auth required)
 export const addArtifact = async (artifactData, getToken) => {
     return apiCall('/artifacts', {
         method: 'POST',

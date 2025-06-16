@@ -18,7 +18,6 @@ const ArtifactDetails = () => {
         document.title = artifact ? `${artifact.name} - RelicVeil` : 'Artifact Details - RelicVeil';
     }, [artifact]);
 
-    // Redirect if not authenticated
     if (!user) {
         toast.error('Please login to view artifact details');
         return <Navigate to="/login" replace />;
@@ -29,7 +28,6 @@ const ArtifactDetails = () => {
     }, [id]);
 
     useEffect(() => {
-        // Check if user has liked or disliked this artifact
         const likedArtifacts = JSON.parse(localStorage.getItem('likedArtifacts') || '[]');
         const dislikedArtifacts = JSON.parse(localStorage.getItem('dislikedArtifacts') || '[]');
         setHasLiked(likedArtifacts.includes(id));
@@ -38,7 +36,6 @@ const ArtifactDetails = () => {
 
     const fetchArtifactDetails = async () => {
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}`, {
@@ -72,7 +69,6 @@ const ArtifactDetails = () => {
         }
 
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}/like`, {
@@ -91,7 +87,6 @@ const ArtifactDetails = () => {
             const data = await response.json();
             
             if (data.success) {
-                // Remove from disliked if it was disliked
                 if (hasDisliked) {
                     const dislikedArtifacts = JSON.parse(localStorage.getItem('dislikedArtifacts') || '[]');
                     localStorage.setItem('dislikedArtifacts', 
@@ -100,13 +95,12 @@ const ArtifactDetails = () => {
                     setHasDisliked(false);
                 }
 
-                // Update liked status
                 const likedArtifacts = JSON.parse(localStorage.getItem('likedArtifacts') || '[]');
                 localStorage.setItem('likedArtifacts', JSON.stringify([...likedArtifacts, id]));
                 setHasLiked(true);
                 setArtifact(prev => ({
                     ...prev,
-                    likeCount: (prev.likeCount || 0) + (hasDisliked ? 2 : 1) // Add 2 if switching from dislike
+                    likeCount: (prev.likeCount || 0) + (hasDisliked ? 2 : 1)
                 }));
                 toast.success('Artifact liked successfully!');
             }
@@ -126,7 +120,6 @@ const ArtifactDetails = () => {
         }
 
         try {
-            // Get the Firebase ID token
             const token = await getToken();
             
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/${id}/dislike`, {
@@ -145,14 +138,12 @@ const ArtifactDetails = () => {
             const data = await response.json();
             
             if (data.success) {
-                // Remove from liked since we were liked before
                 const likedArtifacts = JSON.parse(localStorage.getItem('likedArtifacts') || '[]');
                 localStorage.setItem('likedArtifacts', 
                     JSON.stringify(likedArtifacts.filter(artifactId => artifactId !== id))
                 );
                 setHasLiked(false);
 
-                // Update disliked status
                 const dislikedArtifacts = JSON.parse(localStorage.getItem('dislikedArtifacts') || '[]');
                 localStorage.setItem('dislikedArtifacts', JSON.stringify([...dislikedArtifacts, id]));
                 setHasDisliked(true);

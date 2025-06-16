@@ -88,25 +88,23 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email).finally(() => setLoading(false));
   };
 
-  // Get token from storage or refresh if needed
+
   const getToken = async () => {
     try {
       if (!user) return null;
       
-      // Check if token exists and is not expired
       const currentToken = localStorage.getItem('token');
       if (currentToken) {
-        // Get token expiration from JWT payload
+
         const payload = JSON.parse(atob(currentToken.split('.')[1]));
-        const exp = payload.exp * 1000; // Convert to milliseconds
+        const exp = payload.exp * 1000;
         
-        // If token is not expired, return it
         if (exp > Date.now()) {
           return currentToken;
         }
       }
       
-      // If no token or expired, get a new one
+     
       return await storeToken(user);
     } catch (error) {
       console.error('Error getting token:', error);
