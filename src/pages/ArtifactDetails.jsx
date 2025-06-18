@@ -192,7 +192,7 @@ const ArtifactDetails = () => {
                     </div>
 
                     <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4 md:gap-0">
                             <h1 className="text-4xl font-bold text-[#2C1810] font-[Cinzel]">
                                 {artifact.name}
                             </h1>
