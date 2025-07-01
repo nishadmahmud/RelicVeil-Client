@@ -87,9 +87,11 @@ const Navbar = () => {
                             <Link to="/all-artifacts" className={navLinkStyles('/all-artifacts')}>
                                 All Artifacts
                             </Link>
-                            <Link to="/add-artifact" className={navLinkStyles('/add-artifact')}>
-                                Add Artifact
-                            </Link>
+                            {user && (
+                                <Link to="/add-artifact" className={navLinkStyles('/add-artifact')}>
+                                    Add Artifact
+                                </Link>
+                            )}
                             <Link to="/about" className={navLinkStyles('/about')}>
                                 About
                             </Link>
@@ -313,13 +315,15 @@ const Navbar = () => {
                         >
                             All Artifacts
                         </Link>
-                        <Link
-                            to="/add-artifact"
-                            onClick={closeMenu}
-                            className={mobileLinkStyles('/add-artifact')}
-                        >
-                            Add Artifact
-                        </Link>
+                        {user && (
+                            <Link
+                                to="/add-artifact"
+                                onClick={closeMenu}
+                                className={mobileLinkStyles('/add-artifact')}
+                            >
+                                Add Artifact
+                            </Link>
+                        )}
                         <Link
                             to="/about"
                             onClick={closeMenu}

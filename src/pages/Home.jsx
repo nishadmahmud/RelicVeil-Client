@@ -14,31 +14,36 @@ const Home = () => {
         document.title = 'RelicVeil - Discover Historical Treasures';
     }, []);
 
-    const fetchFeaturedArtifacts = async () => {
-        try {
+    useEffect(() => {
+        const fetchArtifacts = async () => {
             setLoading(true);
             setError(null);
-            
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts/top-liked`);
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to fetch featured artifacts');
-            }
-            
-            const data = await response.json();
-            setFeaturedArtifacts(Array.isArray(data) ? data : []);
-        } catch (error) {
-            console.error('Error:', error);
-            setError(error.message);
-            toast.error(error.message);
-            setFeaturedArtifacts([]);
-        } finally {
-            setLoading(false);
-        }
-    };
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/artifacts`);
+                if (!response.ok) throw new Error('Failed to fetch artifacts');
+                const data = await response.json();
 
-    useEffect(() => {
-        fetchFeaturedArtifacts();
+                // Sort by likeCount descending
+                const sorted = [...data].sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0));
+                let featured = sorted.slice(0, 8);
+
+                // If less than 8, fill with others not already included
+                if (featured.length < 8) {
+                    const ids = new Set(featured.map(a => a._id));
+                    const fillers = data.filter(a => !ids.has(a._id)).slice(0, 8 - featured.length);
+                    featured = [...featured, ...fillers];
+                }
+
+                setFeaturedArtifacts(featured);
+            } catch (error) {
+                setError(error.message);
+                setFeaturedArtifacts([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchArtifacts();
     }, []);
 
     const handleRetry = () => {
@@ -87,15 +92,15 @@ const Home = () => {
                             No featured artifacts available yet.
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {featuredArtifacts.map((artifact, index) => (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
+                            {featuredArtifacts.slice(0, 8).map((artifact, index) => (
                                 <motion.div
                                     key={artifact._id}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.2, duration: 0.8 }}
                                     viewport={{ once: true }}
-                                    className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]"
+                                    className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] h-full flex flex-col"
                                 >
                                     <div className="relative h-48">
                                         <img
@@ -108,16 +113,16 @@ const Home = () => {
                                             <span>{artifact.likeCount || 0}</span>
                                         </div>
                                     </div>
-                                    <div className="p-6">
+                                    <div className="p-4 flex flex-col flex-1">
                                         <h3 className="text-xl font-bold text-[#2C1810] mb-2 line-clamp-1">
                                             {artifact.name}
                                         </h3>
-                                        <p className="text-[#5C4033] mb-4 line-clamp-2">
+                                        <p className="text-[#5C4033] mb-3 line-clamp-2 text-sm">
                                             {artifact.description}
                                         </p>
                                         <Link
                                             to={`/artifact-details/${artifact._id}`}
-                                            className="inline-block text-[#DAA520] hover:text-[#8B4513] font-medium transition-colors duration-300"
+                                            className="inline-block text-[#DAA520] hover:text-[#8B4513] font-medium transition-colors duration-300 mt-auto text-sm font-semibold"
                                         >
                                             View Details →
                                         </Link>
@@ -237,6 +242,94 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Newsletter Section */}
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#F5F5DC]">
+                <div className="max-w-2xl mx-auto text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#2C1810] mb-4 font-[Cinzel]">Join Our Newsletter</h2>
+                    <p className="text-lg text-[#5C4033] mb-6">Get the latest updates, featured artifacts, and history news delivered to your inbox.</p>
+                    <form className="flex flex-col sm:flex-row items-center justify-center gap-4" onSubmit={e => {
+                        e.preventDefault();
+                        const email = e.target.elements.newsletterEmail.value;
+                        if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+                            toast.error('Please enter a valid email address.');
+                            return;
+                        }
+                        toast.success('Thank you for joining our newsletter!');
+                        e.target.reset();
+                    }}>
+                        <input
+                            type="email"
+                            name="newsletterEmail"
+                            required
+                            placeholder="Enter your email"
+                            className="w-full sm:w-auto px-4 py-3 rounded-md border border-[#8B4513]/30 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] text-[#2C1810] placeholder-[#8B7355] bg-white"
+                        />
+                        <button
+                            type="submit"
+                            className="px-8 py-3 bg-[#8B4513] text-white rounded-md font-medium hover:bg-[#654321] transition-colors duration-300"
+                        >
+                            Join Newsletter
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+                <div className="max-w-3xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#2C1810] mb-8 text-center font-[Cinzel]">Frequently Asked Questions</h2>
+                    <FAQ />
+                </div>
+            </section>
+        </div>
+    );
+};
+
+// FAQ component at the bottom of the file
+const FAQ = () => {
+    const [open, setOpen] = React.useState(null);
+    const faqs = [
+        {
+            q: 'How do I add an artifact?',
+            a: 'Simply register or log in, then click on "Add Artifact" in the navigation bar and fill out the form with your artifact details.'
+        },
+        {
+            q: 'Is there a cost to join RelicVeil?',
+            a: 'No, RelicVeil is completely free for all users who want to explore or contribute artifacts.'
+        },
+        {
+            q: 'How are featured artifacts selected?',
+            a: 'Featured artifacts are chosen based on the number of likes from the community.'
+        },
+        {
+            q: 'Can I edit or delete my submitted artifacts?',
+            a: 'Yes, you can manage your artifacts from the "My Artifacts" section after logging in.'
+        },
+        {
+            q: 'How do I contact the RelicVeil team?',
+            a: 'You can use the Contact page to send us a message, and we will get back to you as soon as possible.'
+        }
+    ];
+    return (
+        <div className="space-y-4">
+            {faqs.map((faq, idx) => (
+                <div key={idx} className="border border-[#8B4513]/20 rounded-md bg-[#F5F5DC]">
+                    <button
+                        className="w-full text-left px-6 py-4 focus:outline-none flex justify-between items-center text-[#2C1810] font-semibold text-lg"
+                        onClick={() => setOpen(open === idx ? null : idx)}
+                        aria-expanded={open === idx}
+                    >
+                        {faq.q}
+                        <span className="ml-4 text-[#8B4513]">{open === idx ? '-' : '+'}</span>
+                    </button>
+                    {open === idx && (
+                        <div className="px-6 pb-4 text-[#5C4033] text-base animate-fade-in">
+                            {faq.a}
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 };

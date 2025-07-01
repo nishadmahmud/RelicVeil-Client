@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FaHeart, FaHeartBroken, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaEnvelope } from 'react-icons/fa';
@@ -8,6 +8,8 @@ import { AuthContext } from '../auth/AuthProvider';
 const ArtifactDetails = () => {
     const { id } = useParams();
     const { user, getToken } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
     const [artifact, setArtifact] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasLiked, setHasLiked] = useState(false);
@@ -17,11 +19,6 @@ const ArtifactDetails = () => {
     useEffect(() => {
         document.title = artifact ? `${artifact.name} - RelicVeil` : 'Artifact Details - RelicVeil';
     }, [artifact]);
-
-    if (!user) {
-        toast.error('Please login to view artifact details');
-        return <Navigate to="/login" replace />;
-    }
 
     useEffect(() => {
         fetchArtifactDetails();
@@ -61,6 +58,7 @@ const ArtifactDetails = () => {
     const handleLike = async () => {
         if (!user) {
             toast.error('Please login to like artifacts');
+            navigate('/login', { replace: true, state: { from: location } });
             return;
         }
 
@@ -112,6 +110,7 @@ const ArtifactDetails = () => {
     const handleDislike = async () => {
         if (!user) {
             toast.error('Please login to dislike artifacts');
+            navigate('/login', { replace: true, state: { from: location } });
             return;
         }
 
@@ -192,11 +191,11 @@ const ArtifactDetails = () => {
                     </div>
 
                     <div className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4 md:gap-0">
+                        <div className="mb-6">
                             <h1 className="text-4xl font-bold text-[#2C1810] font-[Cinzel]">
                                 {artifact.name}
                             </h1>
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 mt-4">
                                 <button
                                     onClick={handleLike}
                                     disabled={hasLiked}

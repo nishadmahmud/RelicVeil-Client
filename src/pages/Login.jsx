@@ -41,20 +41,20 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#F5F5DC] py-12 px-4 sm:px-6 lg:px-8 font-[Cinzel]">
-            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-2xl border border-[#8B4513]/20">
+        <div className="min-h-screen flex items-center justify-center bg-[#F5F5DC] pt-20 py-2 px-4 sm:px-6 lg:px-8 font-[Cinzel]">
+            <div className="max-w-md w-full space-y-2 bg-white p-3 rounded-lg shadow-2xl border border-[#8B4513]/20">
                 <div>
-                    <h2 className="mt-4 text-center text-3xl font-bold text-[#2C1810]">
+                    <h2 className="mt-2 text-center text-3xl font-bold text-[#2C1810]">
                         Welcome Back to RelicVeil
                     </h2>
-                    <p className="mt-2 text-center text-sm text-[#5C4033]">
+                    <p className="mt-1 text-center text-sm text-[#5C4033]">
                         Discover the treasures of history
                     </p>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-                    <div className="rounded-md shadow-sm space-y-4">
+                <form className="mt-2 space-y-2" onSubmit={handleLogin}>
+                    <div className="rounded-md shadow-sm space-y-1">
                         <div>
-                            <label htmlFor="email-address" className="block text-sm font-medium text-[#2C1810]">
+                            <label htmlFor="email-address" className="block text-sm font-medium text-[#2C1810] mb-1">
                                 Email address
                             </label>
                             <input
@@ -62,14 +62,14 @@ const Login = () => {
                                 name="email"
                                 type="email"
                                 required
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-[#8B4513]/30 placeholder-[#8B7355] text-[#2C1810] rounded-md focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] sm:text-sm"
+                                className="mt-0.5 appearance-none relative block w-full px-3 py-2 border border-[#8B4513]/30 placeholder-[#8B7355] text-[#2C1810] rounded-md focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] sm:text-sm"
                                 placeholder="Enter your email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-[#2C1810]">
+                            <label htmlFor="password" className="block text-sm font-medium text-[#2C1810] mb-1">
                                 Password
                             </label>
                             <input
@@ -77,7 +77,7 @@ const Login = () => {
                                 name="password"
                                 type="password"
                                 required
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-[#8B4513]/30 placeholder-[#8B7355] text-[#2C1810] rounded-md focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] sm:text-sm"
+                                className="mt-0.5 appearance-none relative block w-full px-3 py-2 border border-[#8B4513]/30 placeholder-[#8B7355] text-[#2C1810] rounded-md focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] sm:text-sm"
                                 placeholder="Enter your password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -85,17 +85,17 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="mt-1">
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#8B4513] hover:bg-[#654321] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transform transition-all duration-150 hover:scale-[1.02]"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#8B4513] hover:bg-[#654321] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transform transition-all duration-150 hover:scale-[1.02]"
                         >
                             Sign in
                         </button>
                     </div>
                 </form>
 
-                <div className="mt-6">
+                <div className="mt-2">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-[#8B4513]/20"></div>
@@ -107,10 +107,10 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <div className="mt-6">
+                    <div className="mt-2">
                         <button
                             onClick={handleGoogleSignIn}
-                            className="w-full flex items-center justify-center px-4 py-2.5 border border-[#8B4513]/30 rounded-md shadow-sm text-sm font-medium text-[#2C1810] bg-white hover:bg-[#F5F5DC] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transform transition-all duration-150 hover:scale-[1.02]"
+                            className="w-full flex items-center justify-center px-4 py-2 border border-[#8B4513]/30 rounded-md shadow-sm text-sm font-medium text-[#2C1810] bg-white hover:bg-[#F5F5DC] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transform transition-all duration-150 hover:scale-[1.02]"
                         >
                             <FcGoogle className="h-5 w-5 mr-2" />
                             Sign in with Google
@@ -118,7 +118,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <div className="text-sm text-center mt-4">
+                <div className="text-sm text-center mt-2">
                     <span className="text-[#5C4033]">Don't have an account?</span>{' '}
                     <Link
                         to="/register"

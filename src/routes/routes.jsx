@@ -90,11 +90,7 @@ const router = createBrowserRouter([
       },
       {
         path: "artifact-details/:id",
-        element: (
-          <PrivateRoute>
-            <ArtifactDetails/>
-          </PrivateRoute>
-        ),
+        element: <ArtifactDetails/>,
         errorElement: <ErrorBoundary />
       },
       {

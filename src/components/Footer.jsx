@@ -39,16 +39,16 @@ const Footer = () => {
                     <div>
                         <h4 className="text-lg font-semibold text-[#DAA520] mb-4">Connect With Us</h4>
                         <div className="flex space-x-4">
-                            <a href="#" className="hover:text-[#DAA520] transition-colors duration-300">
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#DAA520] transition-colors duration-300">
                                 <FaFacebook size={24} />
                             </a>
-                            <a href="#" className="hover:text-[#DAA520] transition-colors duration-300">
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#DAA520] transition-colors duration-300">
                                 <FaTwitter size={24} />
                             </a>
-                            <a href="#" className="hover:text-[#DAA520] transition-colors duration-300">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#DAA520] transition-colors duration-300">
                                 <FaInstagram size={24} />
                             </a>
-                            <a href="#" className="hover:text-[#DAA520] transition-colors duration-300">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#DAA520] transition-colors duration-300">
                                 <FaGithub size={24} />
                             </a>
                         </div>

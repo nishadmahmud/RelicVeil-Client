@@ -81,16 +81,16 @@ const AllArtifacts = () => {
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
                     {filteredArtifacts.map((artifact) => (
                         <motion.div
                             key={artifact._id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
-                            className="bg-white rounded-lg shadow-xl overflow-hidden border border-[#8B4513]/20 hover:shadow-2xl transition-shadow duration-300"
+                            className="bg-white rounded-lg shadow-xl overflow-hidden border border-[#8B4513]/20 hover:shadow-2xl transition-shadow duration-300 h-full flex flex-col"
                         >
-                            <div className="relative h-64">
+                            <div className="relative h-48">
                                 <img
                                     src={artifact.image}
                                     alt={artifact.name}
@@ -98,11 +98,11 @@ const AllArtifacts = () => {
                                 />
                             </div>
 
-                            <div className="p-6">
-                                <h2 className="text-2xl font-bold text-[#2C1810] mb-2 font-[Cinzel]">
+                            <div className="p-4 flex flex-col flex-1">
+                                <h2 className="text-xl font-bold text-[#2C1810] mb-2 font-[Cinzel]">
                                     {artifact.name}
                                 </h2>
-                                <div className="text-sm text-[#8B4513] mb-4">
+                                <div className="text-sm text-[#8B4513] mb-3">
                                     <span className="inline-flex items-center mr-4">
                                         <FaMapMarkerAlt className="mr-1" />
                                         {artifact.presentLocation}
@@ -112,10 +112,10 @@ const AllArtifacts = () => {
                                         {artifact.createdAt}
                                     </span>
                                 </div>
-                                <p className="text-[#2C1810] mb-4 line-clamp-3">
+                                <p className="text-[#2C1810] mb-3 line-clamp-2 text-sm">
                                     {artifact.description}
                                 </p>
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between mt-auto">
                                     <span className="text-sm text-[#8B4513]">
                                         Type: {artifact.type}
                                     </span>
